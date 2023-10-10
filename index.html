@@ -2,10 +2,52 @@
 
 <html>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
+        div {
+            width: 100%;
+            height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            gap: 5vh;
+
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 
     <body>
-        sfgsrg
+        <div>
+            <button id="btn">SPRAWDŹ LOKACJĘ</button>
+            <p id="msg"></p>
+        </div>
+
+        <script>
+            (function(){
+                const btn = document.getElementById('btn');
+                const msg = document.getElementById('msg');
+
+                btn.addEventListener('click', getGeoInfo);
+
+                function getGeoInfo() {
+                    if (!navigator.geolocation) {
+                        msg.innerHTML = 'Nie ma systemu geolokalizacyjnego na tym urządzeniu!'
+                    }
+
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                        msg.innerHTML = 'Twoja pozycja: ' + position.coords.latitude + ' : ' + position.coords.longitude;
+                        },
+                        function(error) {
+                            msg.innerHTML = 'Wystąpił błąd: ' + error.message;
+                        }
+                        )
+                }
+            }())
+        </script>
     </body>
 </html>
